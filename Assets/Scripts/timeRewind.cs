@@ -22,7 +22,6 @@ public class timeRewind : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		Debug.Log (timeData.Count);
 		if (isRewinding) {
 			Rewind ();
 		} else {
