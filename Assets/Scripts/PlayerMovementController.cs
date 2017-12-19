@@ -45,12 +45,10 @@ public class PlayerMovementController : MonoBehaviour {
 	void Rotate(){
 		Transform cameraTransform = Camera.main.transform;
 		pitch += Input.GetAxis("Mouse Y") * sensitivityX * Time.deltaTime *60;
-		yaw += Input.GetAxis("Mouse X") * sensitivityY * Time.deltaTime *60 ;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		yaw = Input.GetAxis("Mouse X") * sensitivityY * Time.deltaTime *60 ;
 
-		Vector3 eulerAngles = new Vector3(-pitch, Camera.main.transform.eulerAngles.y, 0.0f);
-		eulerAngles.x = Mathf.Clamp (eulerAngles.x, -90, 90);
-		cameraTransform.eulerAngles = eulerAngles;
-		transform.eulerAngles = new Vector3(transform.eulerAngles.x, yaw, 0.0f);
+		pitch = Mathf.Clamp (pitch, -90, 90);
+		cameraTransform.eulerAngles = new Vector3(-pitch, transform.eulerAngles.y, 0.0f);;
+		transform.Rotate(Vector3.up * yaw);
 	}
 }
