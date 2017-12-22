@@ -3,29 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class timeRewind : MonoBehaviour {
-	public float timeRewindLength = 5f;
-	bool isRewinding = false;
 	List<TimeData> timeData = new List<TimeData>();
+	GameObject player; 
+	TimeRewindManager timeManager;
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
+		player = GameObject.FindGameObjectWithTag ("Player");
+		timeManager = player.GetComponent<TimeRewindManager> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButton ("Fire2")) {
-			isRewinding = true;
-		} else {
-			isRewinding = false;
-		}
 	}
 
 	void FixedUpdate () {
-		if (isRewinding) {
+		if (timeManager.isRewinding) {
 			Rewind ();
 		} else {
-			if (timeData.Count < 40 * timeRewindLength) {
+			if (timeData.Count < 40 * timeManager.timeRewindLength) {
 				timeData.Insert (0, new TimeData (transform.position, transform.rotation, rb.velocity, rb.angularVelocity));
 			} else {
 				timeData.RemoveAt (timeData.Count -1);

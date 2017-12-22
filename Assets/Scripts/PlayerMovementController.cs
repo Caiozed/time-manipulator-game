@@ -27,11 +27,14 @@ public class PlayerMovementController : MonoBehaviour {
 	}
 
 	void Move(){
-		float x = Input.GetAxis ("Horizontal") * speed  * Time.deltaTime * 60;
-		float z = Input.GetAxis ("Vertical") * speed * Time.deltaTime * 60;
+		float x = Input.GetAxis ("Horizontal");
+		float z = Input.GetAxis ("Vertical");
+
+		Debug.Log (Time.timeScale);
+
 		bool isGrounded = Physics.Raycast (transform.position, -Vector3.up, 1.5f);
 		if (Input.GetButton ("Jump") && height < jumpHeight) {
-			height += jumpSesibility * Time.fixedDeltaTime;
+			height += jumpSesibility * Time.unscaledDeltaTime;
 			rb.velocity = new Vector3 (rb.velocity.x, height, rb.velocity.z);
 		} else {
 			height = jumpHeight;
@@ -39,13 +42,13 @@ public class PlayerMovementController : MonoBehaviour {
 				height = 0;
 			}
 		}
-		rb.velocity = transform.TransformVector(new Vector3(x, rb.velocity.y, z));
+		rb.velocity = transform.TransformVector(new Vector3(x  * speed  * Time.unscaledDeltaTime * 60, rb.velocity.y, z  * speed  * Time.unscaledDeltaTime * 60));
 	}
 
 	void Rotate(){
 		Transform cameraTransform = Camera.main.transform;
-		pitch += Input.GetAxis("Mouse Y") * sensitivityX * Time.deltaTime *60;
-		yaw = Input.GetAxis("Mouse X") * sensitivityY * Time.deltaTime *60 ;
+		pitch += Input.GetAxis("Mouse Y") * sensitivityX * Time.unscaledDeltaTime *60;
+		yaw = Input.GetAxis("Mouse X") * sensitivityY * Time.unscaledDeltaTime *60 ;
 
 		pitch = Mathf.Clamp (pitch, -90, 90);
 		cameraTransform.eulerAngles = new Vector3(-pitch, transform.eulerAngles.y, 0.0f);;
