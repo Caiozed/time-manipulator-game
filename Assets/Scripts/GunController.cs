@@ -4,32 +4,65 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour {
 	public int bullets = 7;
+	public float throwRange = 5;
 	public GameObject bullet;
 	public GameObject bulletCase;
 	public Transform barrel;
 	public Transform casePosition;
-	public ParticleSystem bulletEffect;
+	ParticleSystem bulletEffect;
+	Rigidbody rb;
+	Collider collider;
 	Animator anim;
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
+		collider = GetComponent<Collider> ();
+		rb = GetComponent<Rigidbody> ();
+		bulletEffect = barrel.GetComponent<ParticleSystem> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Shoot ();
+		if (transform.parent) {
+			collider.enabled = false;
+			rb.isKinematic = true;
+			if (transform.parent.tag == "Player") {
+				DropWeapon ();
+				Shoot ();
+			}
+		} else {
+			collider.enabled = true;
+			rb.isKinematic = false;
+		}
+
+
 	}
 
 	void Shoot(){
 		if (Input.GetButtonUp ("Fire1")) {
 			if (bullets > 0) {
-				Instantiate (bullet, barrel.position, barrel.rotation);
+				Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
+				RaycastHit hit;
+				GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
 				GameObject bCase = Instantiate (bulletCase, casePosition.position, casePosition.rotation);
 				bulletEffect.Play ();
 				bCase.GetComponent<Rigidbody> ().velocity = new Vector3 (Random.Range(1.5f, 3), Random.Range(1.5f, 3), 0);
 				bullets --;
+				if (Physics.Raycast (ray, out hit)) {
+					bulletClone.transform.LookAt (hit.point);
+				};
 			}
 			anim.SetTrigger ("Shoot");
+		}
+	}
+
+	void DropWeapon(){
+		if (Input.GetButtonUp ("ThrowWeapon")) {
+			collider.enabled = true;
+			rb.isKinematic = false;
+			transform.SetParent (null);
+			rb.velocity = new Vector3 (0, 0, throwRange);
+			rb.angularVelocity = new Vector3 (Random.Range(-5,5), Random.Range(-5,5), Random.Range(-5,5));
 		}
 	}
 }
