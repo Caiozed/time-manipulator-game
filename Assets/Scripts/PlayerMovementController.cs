@@ -14,7 +14,7 @@ public class PlayerMovementController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
-		Screen.lockCursor = true;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 	
 	// Update is called once per frame
@@ -61,7 +61,7 @@ public class PlayerMovementController : MonoBehaviour {
 		bool adjustPosition = true;
 		while (adjustPosition) {
 			other.localPosition = Vector3.SmoothDamp(other.localPosition, Vector3.zero, ref velocity, 0.1f);
-			other.eulerAngles = Vector3.SmoothDamp(other.localPosition, Vector3.zero, ref velocity, 0.1f);
+			other.localRotation = Quaternion.identity;
 			if (other.localPosition == Vector3.zero || !other.transform.parent) {
 				adjustPosition = false;
 			}

@@ -26,8 +26,10 @@ public class GunController : MonoBehaviour {
 		if (transform.parent) {
 			collider.enabled = false;
 			rb.isKinematic = true;
-			if (transform.parent.tag == "Player") {
-				DropWeapon ();
+			if (transform.root.tag == "Player") {
+				if (Input.GetButtonUp ("ThrowWeapon")) {
+					DropWeapon ();
+				}
 				Shoot ();
 			}
 		} else {
@@ -56,13 +58,21 @@ public class GunController : MonoBehaviour {
 		}
 	}
 
-	void DropWeapon(){
-		if (Input.GetButtonUp ("ThrowWeapon")) {
-			collider.enabled = true;
-			rb.isKinematic = false;
-			transform.SetParent (null);
-			rb.velocity = new Vector3 (0, 0, throwRange);
-			rb.angularVelocity = new Vector3 (Random.Range(-5,5), Random.Range(-5,5), Random.Range(-5,5));
-		}
+	public void ShootPlayer(/*Transform player*/){
+			GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
+			GameObject bCase = Instantiate (bulletCase, casePosition.position, casePosition.rotation);
+			//bulletClone.transform.LookAt (player.position);
+			bulletClone.transform.LookAt(Camera.main.transform.position);
+			bulletEffect.Play ();
+			bCase.GetComponent<Rigidbody> ().velocity = new Vector3 (Random.Range(1.5f, 3), Random.Range(1.5f, 3), 0);
+			anim.SetTrigger ("Shoot");
+	}
+
+	public void DropWeapon(){
+		collider.enabled = true;
+		rb.isKinematic = false;
+		transform.SetParent (null);
+		rb.velocity = transform.forward *  throwRange;
+		rb.angularVelocity = new Vector3 (Random.Range(-5,5), Random.Range(-5,5), Random.Range(-5,5));
 	}
 }
