@@ -40,9 +40,10 @@ GameObject:
   - component: {fileID: 136115332128913110}
   - component: {fileID: 65787832288108882}
   - component: {fileID: 54699650992605594}
+  - component: {fileID: 114007297926485906}
   m_Layer: 0
   m_Name: Bottle
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821251201687440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5.02}
+  m_LocalPosition: {x: 7.57724, y: 1.1589501, z: -23.648434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4734152360550696}
@@ -142,6 +143,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &114007297926485906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1821251201687440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a6a5eba2487c1468cf04742fed4c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyEffect: {fileID: 1924147154009484, guid: c6d72a648be86164abed7900587ad6b0,
+    type: 2}
+  throwRange: 10
 --- !u!136 &136040557691380056
 CapsuleCollider:
   m_ObjectHideFlags: 1

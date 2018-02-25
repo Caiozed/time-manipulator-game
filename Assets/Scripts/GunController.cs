@@ -24,12 +24,10 @@ public class GunController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (transform.parent) {
+			rb.interpolation = RigidbodyInterpolation.None;
 			collider.enabled = false;
 			rb.isKinematic = true;
 			if (transform.root.tag == "Player") {
-				if (Input.GetButtonUp ("ThrowWeapon")) {
-					DropWeapon ();
-				}
 				Shoot ();
 			}
 		} else {
@@ -70,6 +68,7 @@ public class GunController : MonoBehaviour {
 
 	public void DropWeapon(){
 		collider.enabled = true;
+		rb.interpolation = RigidbodyInterpolation.Interpolate;
 		rb.isKinematic = false;
 		transform.SetParent (null);
 		rb.velocity = transform.forward *  throwRange;

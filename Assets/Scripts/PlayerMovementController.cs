@@ -26,7 +26,7 @@ public class PlayerMovementController : MonoBehaviour {
 		Move ();
 		Rotate ();
 		if (Input.GetButtonUp ("Interact")) {
-			WeaponRaycast ();
+			InteractableRaycast ();
 		}
 	}
 
@@ -69,11 +69,11 @@ public class PlayerMovementController : MonoBehaviour {
 		}
 	}
 
-	void WeaponRaycast(){
+	void InteractableRaycast(){
 		Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 2)) {
-			if (gunPlace.transform.childCount == 0 && hit.transform.CompareTag("Weapon")) {
+		if (Physics.Raycast(ray, out hit, 3)) {
+			if (gunPlace.transform.childCount == 0 && hit.transform.CompareTag("Interactable")) {
 				hit.transform.SetParent (gunPlace.transform);
 				StartCoroutine(AdjustPosition (hit.transform));
 			}

@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour {
 	float speed;
 	Collider[] colliders;
 	Rigidbody[] rbs;
+	Rigidbody rb;
 	CapsuleCollider collider;
 	GunController gun;
 	bool isDead = false;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour {
 		speed = agent.speed;
 		collider = GetComponent<CapsuleCollider> ();
 		colliders = GetComponentsInChildren<Collider> ();
+		rb = GetComponent<Rigidbody> ();
 		rbs = GetComponentsInChildren<Rigidbody> ();
 		chest = anim.GetBoneTransform (HumanBodyBones.Spine);
 		foreach (var item in colliders) {
@@ -57,7 +59,9 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void LateUpdate(){
-		chest.LookAt (player.transform.position + transform.TransformVector(offset));
+		if (!isDead) {
+			chest.LookAt (player.transform.position + transform.TransformVector (offset));
+		}
 	}
 
 	/*void OnAnimatorIK(){
@@ -84,10 +88,20 @@ public class EnemyController : MonoBehaviour {
 			item.isKinematic = false;
 		}
 		gun.DropWeapon ();
+		rb.isKinematic = true;
 		collider.enabled = false;
 	}
 
 	public void ShootPlayer(){
+		anim.speed = Random.Range (1f, 2f);
 		gun.ShootPlayer ();
+	}
+
+	public void Stagger(){
+		anim.SetTrigger ("Stagger");
+	}
+
+	public bool isEnemyDead (){
+		return isDead;
 	}
 }
