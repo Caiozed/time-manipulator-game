@@ -30,12 +30,12 @@ public class ThrowObject : MonoBehaviour {
 		if (Physics.Raycast (ray, out hit)) {
 			transform.LookAt (hit.point);
 		};
-			rb.interpolation = RigidbodyInterpolation.Interpolate;
-			collider.enabled = true;
-			rb.isKinematic = false;
-			transform.SetParent (null);
-			rb.velocity = transform.forward *  throwRange;
-			rb.angularVelocity = new Vector3 (Random.Range(-5,5), Random.Range(-5,5), Random.Range(-5,5));
+		rb.interpolation = RigidbodyInterpolation.Interpolate;
+		collider.enabled = true;
+		rb.isKinematic = false;
+		transform.SetParent (null);
+		rb.velocity = transform.TransformVector(new Vector3(0, Random.Range(5,7), throwRange));
+		rb.angularVelocity = new Vector3 (Random.Range(-5,5), Random.Range(2,5), Random.Range(-5,5));
 	}
 
 	void OnCollisionEnter(Collision other){

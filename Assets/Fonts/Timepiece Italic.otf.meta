@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: dd950e2d08f30254c9fe85e30652c949
+timeCreated: 1522880615
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Timepiece
+  fontNames:
+  - Timepiece
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 15fc47c502791e34a99dfe9068aa3249, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

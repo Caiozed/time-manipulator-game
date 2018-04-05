@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour {
-
 	public int speed = 5;
 	public float sensitivityX, sensitivityY = 5;
 	public int jumpSesibility,jumpHeight = 5; 
-	Vector3 velocity;
-	public GameObject gunPlace;
 	float height, yaw, pitch;
 	Rigidbody rb;
 	// Use this for initialization
@@ -25,9 +22,6 @@ public class PlayerMovementController : MonoBehaviour {
 	void FixedUpdate(){
 		Move ();
 		Rotate ();
-		if (Input.GetButtonUp ("Interact")) {
-			InteractableRaycast ();
-		}
 	}
 
 	void Move(){
@@ -57,26 +51,5 @@ public class PlayerMovementController : MonoBehaviour {
 		transform.Rotate(Vector3.up * yaw);
 	}
 
-	IEnumerator AdjustPosition(Transform other){
-		bool adjustPosition = true;
-		while (adjustPosition) {
-			other.localPosition = Vector3.SmoothDamp(other.localPosition, Vector3.zero, ref velocity, 0.1f);
-			other.localRotation = Quaternion.identity;
-			if (other.localPosition == Vector3.zero || !other.transform.parent) {
-				adjustPosition = false;
-			}
-			yield return new WaitForSeconds (Time.fixedDeltaTime);
-		}
-	}
 
-	void InteractableRaycast(){
-		Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 3)) {
-			if (gunPlace.transform.childCount == 0 && hit.transform.CompareTag("Interactable")) {
-				hit.transform.SetParent (gunPlace.transform);
-				StartCoroutine(AdjustPosition (hit.transform));
-			}
-		}
-	}
 }

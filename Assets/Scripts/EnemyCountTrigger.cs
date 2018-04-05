@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyCountTrigger : MonoBehaviour {
 	public EnemyController[] enemies;
-	public GameObject objectToDeactivate;
+	public GameObject objectToInteract;
+	public bool activate;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,11 +13,16 @@ public class EnemyCountTrigger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		int count = 0;
 		foreach (var enemy in enemies) {
-			if (!enemy.isEnemyDead ()) {
-				return;
+			if (enemy.isEnemyDead ()) {
+				count++;
 			}
-			objectToDeactivate.SetActive (false);
+
+			if (count == enemies.Length) {
+				objectToInteract.SetActive (activate);
+				Destroy (gameObject);
+			}
 		}
 	}
 }

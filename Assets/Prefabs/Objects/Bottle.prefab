@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4734152360550696}
   - component: {fileID: 33821704285127856}
   - component: {fileID: 23584588671444772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 65787832288108882}
   - component: {fileID: 54699650992605594}
   - component: {fileID: 114007297926485906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bottle
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &65787832288108882
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -163,7 +163,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821251201687440}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b5b04d3b231b17945871ac10e74b9f8f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.05
@@ -176,10 +176,10 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1821251201687440}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b5b04d3b231b17945871ac10e74b9f8f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.09
+  m_Radius: 0.06
   m_Height: 0.32
   m_Direction: 1
   m_Center: {x: 0, y: 0.19, z: 0}

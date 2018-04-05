@@ -25,6 +25,8 @@ public class BulletController : MonoBehaviour {
 		if (other.transform.CompareTag ("Enemy")) {
 			other.gameObject.GetComponent<EnemyController> ().Die ();
 			Instantiate (hitEffectEnemy, transform.position, transform.rotation);
+		}else if(other.transform.root.CompareTag ("Player")){
+			other.transform.root.GetComponent<PlayerController> ().Die();
 		}else{
 			Instantiate (hitEffect, transform.position, transform.rotation);
 		};

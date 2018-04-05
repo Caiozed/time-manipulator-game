@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadLevelTrigger : MonoBehaviour {
-	public int nextLevelIndex;
 	// Use this for initialization
 	void Start () {
 		
@@ -18,7 +17,7 @@ public class LoadLevelTrigger : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		Debug.Log("enter");
 		if (other.transform.root.CompareTag ("Player")) {
-			SceneManager.LoadScene (nextLevelIndex);
+			LoadingManager.LoadLevel (LoadingManager.CurrentLevel()+1);
 		}
 	}
 }

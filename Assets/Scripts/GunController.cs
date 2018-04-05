@@ -6,9 +6,10 @@ public class GunController : MonoBehaviour {
 	public int bullets = 7;
 	public float throwRange = 5;
 	public GameObject bullet;
-	public GameObject bulletCase;
 	public Transform barrel;
-	public Transform casePosition;
+	public bool automatic;
+	public float timeToShoot;
+	float timer;
 	ParticleSystem bulletEffect;
 	Rigidbody rb;
 	Collider collider;
@@ -23,6 +24,7 @@ public class GunController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		timer += Time.deltaTime;
 		if (transform.parent) {
 			rb.interpolation = RigidbodyInterpolation.None;
 			collider.enabled = false;
@@ -39,30 +41,45 @@ public class GunController : MonoBehaviour {
 	}
 
 	void Shoot(){
-		if (Input.GetButtonUp ("Fire1")) {
-			if (bullets > 0) {
-				Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
-				RaycastHit hit;
-				GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
-				GameObject bCase = Instantiate (bulletCase, casePosition.position, casePosition.rotation);
-				bulletEffect.Play ();
-				bCase.GetComponent<Rigidbody> ().velocity = new Vector3 (Random.Range(1.5f, 3), Random.Range(1.5f, 3), 0);
-				bullets --;
-				if (Physics.Raycast (ray, out hit)) {
-					bulletClone.transform.LookAt (hit.point);
-				};
+		if (automatic) {
+			if (Input.GetButton ("Fire1") && timer > timeToShoot) {
+				timer = 0;
+				if (bullets > 0) {
+					Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
+					RaycastHit hit;
+					GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
+					bulletEffect.Play ();
+					bullets--;
+					if (Physics.Raycast (ray, out hit)) {
+						bulletClone.transform.LookAt (hit.point);
+					}
+					;
+				}
+				anim.SetTrigger ("Shoot");
 			}
-			anim.SetTrigger ("Shoot");
+		} else {
+			if (Input.GetButtonUp ("Fire1")) {
+				if (bullets > 0) {
+					Ray ray = Camera.main.ViewportPointToRay (new Vector2 (0.5f, 0.5f));
+					RaycastHit hit;
+					GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
+					bulletEffect.Play ();
+					bullets--;
+					if (Physics.Raycast (ray, out hit)) {
+						bulletClone.transform.LookAt (hit.point);
+					}
+					;
+				}
+				anim.SetTrigger ("Shoot");
+			}
 		}
 	}
 
 	public void ShootPlayer(/*Transform player*/){
 			GameObject bulletClone = Instantiate (bullet, barrel.position, barrel.rotation);
-			GameObject bCase = Instantiate (bulletCase, casePosition.position, casePosition.rotation);
 			//bulletClone.transform.LookAt (player.position);
 			bulletClone.transform.LookAt(Camera.main.transform.position);
 			bulletEffect.Play ();
-			bCase.GetComponent<Rigidbody> ().velocity = new Vector3 (Random.Range(1.5f, 3), Random.Range(1.5f, 3), 0);
 			anim.SetTrigger ("Shoot");
 	}
 

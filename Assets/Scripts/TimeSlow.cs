@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class TimeSlow : MonoBehaviour {
 	public float powerDuration = 5;
 	public float depleteRate, fillRate = 1;
+	PlayerController playerController;
 	float powerLevel;
 	public RectTransform slowSlider;
 	// Use this for initialization
 	void Start () {
 		powerLevel = powerDuration;
+		playerController = GetComponent<PlayerController> ();
 	}
 	
 	// Update is called once per frame
@@ -23,8 +25,10 @@ public class TimeSlow : MonoBehaviour {
 				StopSlow ();
 			}
 		} else {
-			StopSlow ();
-			powerLevel += Time.fixedUnscaledDeltaTime * fillRate;
+			if (!playerController.isDead) {
+				StopSlow ();
+				powerLevel += Time.fixedUnscaledDeltaTime * fillRate;
+			}
 		}
 		powerLevel = Mathf.Clamp (powerLevel, 0, 5);
 		slowSlider.localScale = new Vector3((powerLevel/powerDuration), 1, 1);
