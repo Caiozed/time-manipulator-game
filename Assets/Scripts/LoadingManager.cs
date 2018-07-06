@@ -17,7 +17,7 @@ public class LoadingManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (async.progress == 0.9f) {
-			loadingText.text = "Press Any button!";
+			loadingText.text = "Click to continue!";
 			if(Input.GetButtonDown("Fire1")){
 				async.allowSceneActivation = true;
 			}
@@ -26,7 +26,7 @@ public class LoadingManager : MonoBehaviour {
 
 	public static void LoadLevel(int level){
 		levelToLoad = level;
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene (SceneManager.sceneCountInBuildSettings-1);
 	}
 
 	public static int CurrentLevel(){
